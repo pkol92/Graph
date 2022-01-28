@@ -1,4 +1,7 @@
+// const { Chart } = require("chart.js");
+
 const root = document.getElementById("graph");
+
 
 //create first paragraph section
 const paragraphDiv = document.createElement("div");
@@ -16,7 +19,6 @@ const graphDiv = document.createElement("div");
 const tableDiv = document.createElement("div");
 
 placeholder.append(graphDiv, tableDiv)
-
 
 
 //create button
@@ -66,7 +68,7 @@ function downloadData(api) {
          console.log('Error happened here!')
          console.error(error)
        }
-      })
+    })
 }
 
 
@@ -74,3 +76,24 @@ button.addEventListener("click", e => {
     e.preventDefault();
     downloadData(myApi);
 });
+
+// const myChart = new Chart(myChart, {
+//     type: 'bar',
+//     data: {
+//         labels: ['20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89','90-99','100-109'],
+//         datasets: [{
+//             label: 'Wiek',
+//             data: [
+//                 323,
+//                 32323,
+//                 45,
+//                 53,
+//                 12,
+//                 1
+//             ]
+//         }]
+//     },
+//     options: {}
+// })
+
+// root.append(myChart);
