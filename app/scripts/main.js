@@ -1,5 +1,3 @@
-// const { Chart } = require("chart.js");
-
 const root = document.getElementById("graph");
 
 
@@ -17,6 +15,7 @@ paragraphDiv.append(paragraphFirst, paragraphSecond);
 const placeholder = document.createElement("div");
 const graphDiv = document.createElement("div");
 const tableDiv = document.createElement("div");
+tableDiv.setAttribute("id", "tableDiv")
 
 placeholder.append(graphDiv, tableDiv)
 
@@ -36,7 +35,10 @@ const parFirst = document.createTextNode(firstText);
 const parSecond = document.createTextNode(secondText);
 const parThird = document.createTextNode(thirdText);
 
-parDiv.append(parFirst, parSecond, parThird);
+const p = document.createElement("P");
+p.setAttribute("id", "test");
+
+parDiv.append(parFirst, parSecond, parThird, p);
 
 root.append(paragraphDiv, placeholder, button, parDiv);
 
@@ -64,6 +66,9 @@ function downloadData(api) {
         try {
          const data = await response.json()
          console.log('response data?', data)
+         const { dob } = data;
+        console.log(dob)
+
        } catch(error) {
          console.log('Error happened here!')
          console.error(error)
@@ -77,23 +82,18 @@ button.addEventListener("click", e => {
     downloadData(myApi);
 });
 
-// const myChart = new Chart(myChart, {
-//     type: 'bar',
-//     data: {
-//         labels: ['20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89','90-99','100-109'],
-//         datasets: [{
-//             label: 'Wiek',
-//             data: [
-//                 323,
-//                 32323,
-//                 45,
-//                 53,
-//                 12,
-//                 1
-//             ]
-//         }]
-//     },
-//     options: {}
-// })
+const canvasElemt = document.getElementById("chart");
 
-// root.append(myChart);
+//test graph
+const config = {
+    type: "bar",
+    data: {
+        labels: ['10-19', '20-29','30-39'],
+        datasets: [{
+            label: "Age",
+            data: [3, 4, 10]
+        }],
+    },
+};
+
+const menChart = new Chart (canvasElemt, config);
