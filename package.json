@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/pkol92/Graph/issues"
   },
-  "homepage": "https://github.com/pkol92/Graph"
+  "homepage": "https://github.com/pkol92/Graph",
+  "dependencies": {
+    "chart.js": "^3.7.0"
+  }
 }
