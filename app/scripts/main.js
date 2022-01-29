@@ -14,6 +14,7 @@ paragraphDiv.append(paragraphFirst, paragraphSecond);
 //create placeholder
 const placeholder = document.createElement("div");
 const graphDiv = document.createElement("div");
+graphDiv.setAttribute("id", "graphDiv");
 const tableDiv = document.createElement("div");
 tableDiv.setAttribute("id", "tableDiv")
 
@@ -21,13 +22,13 @@ tableDiv.setAttribute("id", "tableDiv")
 // table.setAttribute("id", "table");
 // tableDiv.append(table);
 
-function tableTitles(fieldTitles) {
-    fieldTitles.forEach((fieldTitle) => {
-    let th = document.createElement('th');
-    th.appendChild(document.createTextNode(fieldTitle));
-    table.append(th);
-    });
-};
+// function tableTitles(fieldTitles) {
+//     fieldTitles.forEach((fieldTitle) => {
+//     let th = document.createElement('th');
+//     th.appendChild(document.createTextNode(fieldTitle));
+//     table.append(th);
+//     });
+// };
 
 
 
@@ -58,8 +59,6 @@ parDiv.append(parFirst, parSecond, parThird, p);
 
 root.append(paragraphDiv, placeholder, button, parDiv);
 
-// const myList = document.createElement("ul");
-// root.append(myList);
 const myTitles = ["First Name", "Last Name", "Age", "City"];
 
 function addMen(men){
@@ -97,6 +96,35 @@ function deleteTable() {
     const table = document.getElementById('table');
     table.remove();
 }
+
+function deleteGraph() {
+    const graph = document.getElementById("chart");
+    graph.remove();
+}
+
+//test graph
+function createGraph(dataMan) {
+    const canvas = document.createElement("canvas");
+    canvas.setAttribute("id", "chart");
+    canvas.setAttribute("width", "100");
+    canvas.setAttribute("height", "100");
+    const graphDiv = document.getElementById("graphDiv");
+    graphDiv.append(canvas);
+    const canvasElemt = document.getElementById("chart");
+
+    const config = {
+        type: "bar",
+        data: {
+            labels: ['20-29','30-39', '40-49', '50-59','60-69', '70-79','80-89', '90-99'],
+            datasets: [{
+                label: "Number of men at a certain age",
+                data: [...dataMan]
+            }],
+        },
+    };
+
+    const menChart = new Chart (canvasElemt, config);
+};
 
 const myApi = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
 
@@ -139,7 +167,8 @@ function downloadData(apiUrl) {
             } else {
                 age100.push(data.results[i].dob.age)
             }
-        }
+    }
+
         console.log(age20.length, age30.length, age40.length, age50.length, age60.length, age70.length, age80.length, age90.length, age100.length)
      
         //data to table
@@ -152,6 +181,17 @@ function downloadData(apiUrl) {
         } else {
             createTable(sortAge, myTitles);
         }
+
+        const groupsMan = [];
+        groupsMan.push(age20.length, age30.length, age40.length, age50.length, age60.length, age70.length, age80.length, age90.length, age100.length);
+
+        if (document.getElementById("chart")) {
+            deleteGraph();
+            createGraph(groupsMan);
+        } else {
+            createGraph(groupsMan);
+        };
+        
         
         
     })
@@ -163,28 +203,10 @@ function downloadData(apiUrl) {
 }
 
 
-
-// const myTitles = ["First Name", "Last Name", "City"]
-
 button.addEventListener("click", e => {
     e.preventDefault();
     downloadData(myApi);
-    // tableTitles(myTitles);
 });
 
 
-//test graph
-const canvasElemt = document.getElementById("chart");
 
-const config = {
-    type: "bar",
-    data: {
-        labels: ['10-19', '20-29','30-39'],
-        datasets: [{
-            label: "Number of men at a certain age",
-            data: [3, 4, 10]
-        }],
-    },
-};
-
-const menChart = new Chart (canvasElemt, config);
