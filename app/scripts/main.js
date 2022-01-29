@@ -44,6 +44,7 @@ button.innerText = "Show data";
 //create second paragraph section
 const parDiv = document.createElement("div");
 parDiv.setAttribute("class", "paragraphDiv");
+parDiv.setAttribute("id", "secondParDiv");
 
 const firstText = "The French are, paradoxically, strongly conscious of belonging to a single nation, but they hardly constitute a unified ethnic group by any scientific gauge. Before the official discovery of the Americas at the end of the 15th century, France, located on the western extremity of the Old World, was regarded for centuries by Europeans as being near the edge of the known world. Generations of different migrants traveling by way of the Mediterranean from the Middle East and Africa and through Europe from Central Asia and the Nordic lands settled permanently in France, forming a variegated grouping, almost like a series of geologic strata, since they were unable to migrate any farther. Perhaps the oldest reflection of these migrations is furnished by the Basque people, who live in an isolated area west of the Pyrenees in both Spain and France, who speak a language unrelated to other European languages, and whose origin remains unclear. The Celtic tribes, known to the Romans as Gauls, spread from central Europe in the period 500 BCE–500 CE to provide France with a major component of its population, especially in the centre and west. At the fall of the Roman Empire, there was a powerful penetration of Germanic (Teutonic) peoples, especially in northern and eastern France. The incursion of the Norsemen (Vikings) brought further Germanic influence. In addition to these many migrations, France was, over the centuries, the field of numerous battles and of prolonged occupations before becoming, in the 19th and especially in the 20th century, the prime recipient of foreign immigration into Europe, adding still other mixtures to the ethnic melting pot.";
 
@@ -116,7 +117,7 @@ function createGraph(dataMan) {
     const config = {
         type: "bar",
         data: {
-            labels: ['20-29','30-39', '40-49', '50-59','60-69', '70-79', '80-89', '90-99', '100 and more'],
+            labels: ['20-29','30-39', '40-49', '50-59','60-69', '70-79'],
             datasets: [{
                 label: "Number of men at a certain age",
                 data: [...dataMan],
@@ -147,9 +148,6 @@ function downloadData(apiUrl) {
     const age50 = [];
     const age60 = [];
     const age70 = [];
-    const age80 = [];
-    const age90 = [];
-    const age100 = [];
     const groupsMan = [];
 
     for (let i = 0; i<data.results.length; i++){
@@ -163,18 +161,12 @@ function downloadData(apiUrl) {
             age50.push(data.results[i].dob.age)
         } else if ((data.results[i].dob.age >= 60) && (data.results[i].dob.age < 70)) {
             age60.push(data.results[i].dob.age)
-        }  else if ((data.results[i].dob.age >= 70) && (data.results[i].dob.age < 80)) {
+        }  else {
             age70.push(data.results[i].dob.age)
-        } else if ((data.results[i].dob.age >= 80) && (data.results[i].dob.age < 90)) {
-            age80.push(data.results[i].dob.age)
-        } else if ((data.results[i].dob.age >= 90) && (data.results[i].dob.age < 100)) {
-            age90.push(data.results[i].dob.age)
-        } else {
-            age100.push(data.results[i].dob.age)
         }
     };
     
-    groupsMan.push(age20.length, age30.length, age40.length, age50.length, age60.length, age70.length, age80.length, age90.length, age100.length);
+    groupsMan.push(age20.length, age30.length, age40.length, age50.length, age60.length, age70.length);
 
     //data to table
     const sortAge = data.results.sort((a, b) => b.dob.age - a.dob.age);
