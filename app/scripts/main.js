@@ -135,25 +135,17 @@ function createGraph(dataMan) {
 
 const myApi = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
 
-// function showPage(){
-//     const placeholder = document.getElementById("placeholder");
-//     setTimeout(function(){ placeholder.className += ' loader'; }, 5000 * 2)
-//     setTimeout(function(){ placeholder.className += ' placeholder'; }, 5000 * 2)
-// }
-const loading = document.createElement('div');
-loading.setAttribute("id", "loading");
-placeholder.append(loading);
-const loader = document.querySelector("#loading");
+const loaderDiv = document.querySelector("#placeholder");
 
 function displayLoading() {
-    loader.classList.add("display");
+    loaderDiv.className = "loading";
     setTimeout(() => {
-        loader.classList.remove("display");
+        loaderDiv.className = "placeholder";
     }, 5000);
 };
 
 function hideLoading() {
-    loader.classList.remove("display");
+    loaderDiv.className = "placeholder";
 }
 
 function downloadData(apiUrl) {
@@ -222,7 +214,6 @@ button.addEventListener("click", e => {
     };
 
     downloadData(myApi);
-    
     
 });
 
