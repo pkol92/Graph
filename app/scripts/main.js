@@ -17,28 +17,30 @@ const graphDiv = document.createElement("div");
 const tableDiv = document.createElement("div");
 tableDiv.setAttribute("id", "tableDiv")
 
-const table = document.createElement("table");
-table.setAttribute("id", "table");
-tableDiv.append(table);
+// const table = document.createElement("table");
+// table.setAttribute("id", "table");
+// tableDiv.append(table);
 
-// function tableTitles(fieldTitles) {
-//     fieldTitles.forEach((fieldTitle) => {
-//     let th = document.createElement('th');
-//     th.appendChild(document.createTextNode(fieldTitle));
-//     table.appendChild(th);
-//     });
-// };
+function tableTitles(fieldTitles) {
+    fieldTitles.forEach((fieldTitle) => {
+    let th = document.createElement('th');
+    th.appendChild(document.createTextNode(fieldTitle));
+    table.append(th);
+    });
+};
 
-// function addMen(men){
-//     const tbl = document.querySelector("#table");
-//     const row = tbl.insertRow();
-//     const firstName = row.insertCell();
-//     firstName.innerText = men.firstName;
-//     const lastName = row.insertCell();
-//     lastName.innerText = men.lastName;
-//     const city = row.insertCell();
-//     city.innerText = men.city;
-// };
+function addMen(men){
+    const tbl = document.querySelector("#table");
+    const row = tbl.insertRow();
+    const firstName = row.insertCell();
+    firstName.innerText = men.name.first;
+    const lastName = row.insertCell();
+    lastName.innerText = men.name.last;
+    const age = row.insertCell();
+    age.innerText = men.dob.age;
+    const city = row.insertCell();
+    city.innerText = men.location.city;
+};
 
 
 
@@ -69,6 +71,16 @@ root.append(paragraphDiv, placeholder, button, parDiv);
 
 // const myList = document.createElement("ul");
 // root.append(myList);
+function createTable(men) {
+    const myTitles = ["First Name", "Last Name", "Age", "City"]
+        const table = document.createElement("table");
+        table.setAttribute("id", "table");
+        tableDiv.append(table);
+        tableTitles(myTitles);
+        for (let i = 0; i < 10; i++) {
+            addMen(men[i])
+        };
+}
 
 const myApi = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
 
@@ -78,47 +90,56 @@ function downloadData(apiUrl) {
       return results.json();
     })
     .then((data) => {
-      console.log(data.results);
-      const col = [];
-         for (let i = 0; i < data.results.length; i++) {
-             for (let key in data.results[i]) {
-                 if (col.indexOf(key) === -1) {
-                     col.push(key);
-                 }
-             }
-         }
- 
-         // CREATE DYNAMIC TABLE.
-         const table = document.createElement("table");
- 
-         // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
- 
-         let tr = table.insertRow(-1);                   // TABLE ROW.
- 
-         for (let i = 0; i < col.length; i++) {
-             let th = document.createElement("th");      // TABLE HEADER.
-             th.innerHTML = col[i];
-             tr.appendChild(th);
-         }
- 
-         // ADD JSON DATA TO THE TABLE AS ROWS.
-         for (let i = 0; i < data.results.length; i++) {
- 
-             tr = table.insertRow(-1);
- 
-             for (let j = 0; j < col.length; j++) {
-                 let tabCell = tr.insertCell(-1);
-                 tabCell.innerHTML = data.results[i][col[j]];
-             }
-         }
- 
-         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-         const divContainer = document.getElementById("table");
-         divContainer.innerHTML = "";
-         divContainer.appendChild(table);
+      console.log(data.results[0]);
 
-    });
+    //data to graph
+    const age20 = [];
+    const age30 = [];
+    const age40 = [];
+    const age50 = [];
+    const age60 = [];
+    const age70 = [];
+    const age80 = [];
+    const age90 = [];
+    const age100 = [];
+
+    for (let i = 0; i<data.results.length; i++){
+            if ((data.results[i].dob.age >= 20) && (data.results[i].dob.age < 30)) {
+                age20.push(data.results[i].dob.age)
+            } else if ((data.results[i].dob.age >= 30) && (data.results[i].dob.age < 40)) {
+                age30.push(data.results[i].dob.age)
+            } else if ((data.results[i].dob.age >= 40) && (data.results[i].dob.age < 50)) {
+                age40.push(data.results[i].dob.age)
+            } else if ((data.results[i].dob.age >= 50) && (data.results[i].dob.age < 60)) {
+                age50.push(data.results[i].dob.age)
+            } else if ((data.results[i].dob.age >= 60) && (data.results[i].dob.age < 70)) {
+                age60.push(data.results[i].dob.age)
+            } else if ((data.results[i].dob.age >= 70) && (data.results[i].dob.age < 80)) {
+                age70.push(data.results[i].dob.age)
+            } else if ((data.results[i].dob.age >= 80) && (data.results[i].dob.age < 90)) {
+                age80.push(data.results[i].dob.age)
+            } else if ((data.results[i].dob.age >= 90) && (data.results[i].dob.age < 100)) {
+                age90.push(data.results[i].dob.age)
+            } else {
+                age100.push(data.results[i].dob.age)
+            }
+        }
+        console.log(age20.length, age30.length, age40.length, age50.length, age60.length, age70.length, age80.length, age90.length, age100.length)
+     
+        //data to table
+        const sortAge = data.results.sort((a, b) => b.dob.age - a.dob.age)
+
+        //create table
+        createTable(sortAge);
+        
+    })
+    .catch(error => {
+         console.log('Error happened here!')
+         console.error(error)
+    })
+
 }
+
 
 
 // const myTitles = ["First Name", "Last Name", "City"]
