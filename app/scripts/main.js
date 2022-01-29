@@ -1,6 +1,5 @@
 const root = document.getElementById("dataPage");
 
-
 //create first paragraph section
 const paragraphDiv = document.createElement("div");
 paragraphDiv.setAttribute("class", "paragraphDiv");
@@ -25,6 +24,9 @@ paragraphSecond.textContent += pSecond;
 
 paragraphDiv.append(paragraphFirst, paragraphSecond);
 
+//create div for placeholder
+const phDiv = document.createElement("div");
+phDiv.setAttribute("id", "phDiv");
 
 //create placeholder
 const placeholder = document.createElement("div");
@@ -36,7 +38,7 @@ const tableDiv = document.createElement("div");
 tableDiv.setAttribute("id", "tableDiv");
 
 placeholder.append(graphDiv, tableDiv);
-
+phDiv.append(placeholder);
 
 //create button
 const button = document.createElement("button");
@@ -62,7 +64,7 @@ parThird.textContent += thirdText;
 
 parDiv.append(parFirst, parSecond, parThird);
 
-root.append(placeholder, button, parDiv);
+root.append(phDiv, button, parDiv);
 
 const myTitles = ["First Name", "Last Name", "Age", "City"];
 
@@ -200,10 +202,25 @@ function downloadData(apiUrl) {
 
 };
 
+const imgDiv = document.getElementById("secondParDiv");
+function addImg() {
+    imgDiv.className = "secondParDiv";
+};
 
+function removeImg() {
+    imgDiv.className = "paragraphDiv";
+}
+
+let countClick = 0;
 
 button.addEventListener("click", e => {
-    e.preventDefault();
+    // e.preventDefault();
+    countClick++
+    if (countClick % 5 === 0) {
+        addImg()
+    } else {
+        removeImg()
+    }
 
     if (document.getElementById("chart")) {
         deleteGraph()
