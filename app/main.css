@@ -1,4 +1,4 @@
-.paragraphDiv, #placeholder {
+.paragraphDiv, #placeholder, .placeholder {
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -6,7 +6,7 @@
     padding-top: 0.5rem;
 }
 
-#placeholder {
+#placeholder, .placeholder {
     /* place-self: center; */
     margin: 0 2rem;
     display: flex;
@@ -55,4 +55,27 @@ canvas {
     background-image: url(../app/img/flag.jpg);
     background-position: center;
     background-size: cover;
+}
+
+
+#loading {
+  width: 2rem;
+  height: 2rem;
+  border: 5px solid #f3f3f3;
+  border-top: 6px solid #9c41f2;
+  border-radius: 100%;
+  margin: auto;
+  visibility: hidden;
+  animation: spin 1s infinite linear;
+}
+#loading.display {
+  visibility: visible;
+}
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
 }

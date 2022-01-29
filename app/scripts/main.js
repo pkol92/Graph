@@ -29,6 +29,7 @@ paragraphDiv.append(paragraphFirst, paragraphSecond);
 //create placeholder
 const placeholder = document.createElement("div");
 placeholder.setAttribute("id", "placeholder");
+placeholder.setAttribute("class", "placeholder");
 const graphDiv = document.createElement("div");
 graphDiv.setAttribute("id", "graphDiv");
 const tableDiv = document.createElement("div");
@@ -134,13 +135,35 @@ function createGraph(dataMan) {
 
 const myApi = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
 
+// function showPage(){
+//     const placeholder = document.getElementById("placeholder");
+//     setTimeout(function(){ placeholder.className += ' loader'; }, 5000 * 2)
+//     setTimeout(function(){ placeholder.className += ' placeholder'; }, 5000 * 2)
+// }
+const loading = document.createElement('div');
+loading.setAttribute("id", "loading");
+placeholder.append(loading);
+const loader = document.querySelector("#loading");
+
+function displayLoading() {
+    loader.classList.add("display");
+    setTimeout(() => {
+        loader.classList.remove("display");
+    }, 5000);
+};
+
+function hideLoading() {
+    loader.classList.remove("display");
+}
+
 function downloadData(apiUrl) {
+    displayLoading()
     fetch(apiUrl)
     .then((results) => {
       return results.json();
     })
     .then((data) => {
-
+    hideLoading()
     //data to graph
     const age20 = [];
     const age30 = [];
@@ -171,21 +194,11 @@ function downloadData(apiUrl) {
     //data to table
     const sortAge = data.results.sort((a, b) => b.dob.age - a.dob.age);
 
-    //create graph
-    if (document.getElementById("chart")) {
-        deleteGraph();
+    // create graph
         createGraph(groupsMan);
-    } else {
-        createGraph(groupsMan);
-    };
 
     //create table
-    if (document.getElementById('table')) {
-        deleteTable();
         createTable(sortAge, myTitles);
-    } else {
-        createTable(sortAge, myTitles);
-    };
               
     })
     .catch(error => {
@@ -196,7 +209,20 @@ function downloadData(apiUrl) {
 };
 
 
+
 button.addEventListener("click", e => {
     e.preventDefault();
+
+    if (document.getElementById("chart")) {
+        deleteGraph()
+    }
+
+    if (document.getElementById('table')) {
+        deleteTable();
+    };
+
     downloadData(myApi);
+    
+    
 });
+
