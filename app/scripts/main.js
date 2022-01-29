@@ -29,18 +29,7 @@ function tableTitles(fieldTitles) {
     });
 };
 
-function addMen(men){
-    const tbl = document.querySelector("#table");
-    const row = tbl.insertRow();
-    const firstName = row.insertCell();
-    firstName.innerText = men.name.first;
-    const lastName = row.insertCell();
-    lastName.innerText = men.name.last;
-    const age = row.insertCell();
-    age.innerText = men.dob.age;
-    const city = row.insertCell();
-    city.innerText = men.location.city;
-};
+
 
 
 
@@ -71,15 +60,42 @@ root.append(paragraphDiv, placeholder, button, parDiv);
 
 // const myList = document.createElement("ul");
 // root.append(myList);
-function createTable(men) {
-    const myTitles = ["First Name", "Last Name", "Age", "City"]
-        const table = document.createElement("table");
-        table.setAttribute("id", "table");
-        tableDiv.append(table);
-        tableTitles(myTitles);
-        for (let i = 0; i < 10; i++) {
-            addMen(men[i])
-        };
+const myTitles = ["First Name", "Last Name", "Age", "City"];
+
+function addMen(men){
+    const tbl = document.querySelector("#table");
+    const row = tbl.insertRow();
+    const firstName = row.insertCell();
+    firstName.innerText = men.name.first;
+    const lastName = row.insertCell();
+    lastName.innerText = men.name.last;
+    const age = row.insertCell();
+    age.innerText = men.dob.age;
+    const city = row.insertCell();
+    city.innerText = men.location.city;
+};
+
+function createTable(men, fieldTitles) {
+    const table = document.createElement("table");
+    table.setAttribute("id", "table");
+    const tableDiv = document.getElementById('tableDiv')
+
+    fieldTitles.forEach((fieldTitle) => {
+        let th = document.createElement('th');
+        th.appendChild(document.createTextNode(fieldTitle));
+        table.append(th);
+    });
+
+    tableDiv.append(table);
+
+    for (let i = 0; i < 10; i++) {
+        addMen(men[i])
+    };        
+}
+
+function deleteTable() {
+    const table = document.getElementById('table');
+    table.remove();
 }
 
 const myApi = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
@@ -130,7 +146,13 @@ function downloadData(apiUrl) {
         const sortAge = data.results.sort((a, b) => b.dob.age - a.dob.age)
 
         //create table
-        createTable(sortAge);
+        if (document.getElementById('table')) {
+            deleteTable();
+            createTable(sortAge, myTitles);
+        } else {
+            createTable(sortAge, myTitles);
+        }
+        
         
     })
     .catch(error => {
