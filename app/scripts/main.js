@@ -1,4 +1,4 @@
-import 'regenerator-runtime/runtime';
+import "regenerator-runtime/runtime";
 
 const url = "https://randomuser.me/api/?gender=male&nat=fr&results=1000";
 const tableTitles = ["First Name", "Last Name", "Age", "City"];
@@ -43,7 +43,6 @@ function getGraphData(data) {
   let age50 = 0;
   let age60 = 0;
   let age70 = 0;
-  let groupsMan = [];
 
   for (let i = 0; i < data.results.length; i++) {
     let age = data.results[i].dob.age;
@@ -62,9 +61,7 @@ function getGraphData(data) {
     }
   }
 
-  groupsMan.push(age20, age30, age40, age50, age60, age70);
-
-  return groupsMan;
+  return [age20, age30, age40, age50, age60, age70];
 }
 
 //create table
@@ -131,13 +128,13 @@ function addImg() {
 }
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-    let count = parseInt(localStorage.getItem('counter') || 0);
-    localStorage.setItem('counter', ++count)
+  let count = parseInt(localStorage.getItem("counter") || 0);
+  localStorage.setItem("counter", ++count);
 }
 
-if (localStorage.getItem('counter') % 5 === 0) {
-    addImg();
-};
+if (localStorage.getItem("counter") % 5 === 0) {
+  addImg();
+}
 
 //download API
 async function downloadData(apiUrl) {
@@ -160,7 +157,6 @@ async function main() {
 //add function to the button
 const button = document.querySelector("#btn");
 button.addEventListener("click", () => {
-
   if (document.getElementById("chart")) {
     deleteGraph();
   }
@@ -168,9 +164,8 @@ button.addEventListener("click", () => {
   if (document.getElementById("table")) {
     deleteTable();
   }
-  
-  (async () => { 
-      await main();
-    })();
 
+  (async () => {
+    await main();
+  })();
 });
