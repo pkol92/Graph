@@ -7,7 +7,7 @@
     "deploy": "gh-pages -d build",
     "lint": "eslint ./",
     "dev": "parcel app/index.html",
-    "build": "parcel build app/index.html"
+    "build": "parcel build app/index.html --public-url ./"
   },
   "repository": {
     "type": "git",
