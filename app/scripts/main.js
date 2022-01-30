@@ -60,21 +60,7 @@ parDiv.append(parFirst, parSecond, parThird);
 
 root.append(phDiv, button, parDiv);
 
-
-
-// function addMen(men){
-//     const tbl = document.querySelector("#table");
-//     const row = tbl.insertRow();
-//     const firstName = row.insertCell();
-//     firstName.innerText = men.name.first;
-//     const lastName = row.insertCell();
-//     lastName.innerText = men.name.last;
-//     const age = row.insertCell();
-//     age.innerText = men.dob.age;
-//     const city = row.insertCell();
-//     city.innerText = men.location.city;
-// };
-
+//function to create the table
 function addRow(row, item){
     const nameCell = row.insertCell();
     nameCell.innerText = item;
