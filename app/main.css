@@ -9,7 +9,7 @@
 
 #phDiv {
     display: flex;
-    height: 90vh;
+    height: 100vh;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
@@ -17,7 +17,6 @@
 }
 
 #placeholder, .placeholder {
-    /* place-self: center; */
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
@@ -39,14 +38,7 @@
     justify-content: center;
 }
 
-#graphDiv {
-  /* max-width: 600px;
-  align-self: center; */
-}
-
 table {
-    /* text-align: left;
-    width: 60%; */
     box-sizing: border-box;
     padding: 1rem;
     text-align: left;
@@ -54,10 +46,22 @@ table {
 
 th {
     width: 25%;
+    background: #ccc;
+    text-align: justify;
+    vertical-align: middle;
+    padding: 0.3rem;
 }
 
+td {
+    padding: 2%;
+}
+
+tr:nth-child(even) {
+    background: #ccc;
+}
+
+
 button {
-    width: 20%;
     height: 2rem;
     place-self: center;
     margin: 1rem;
@@ -65,7 +69,6 @@ button {
 
 canvas {
     box-sizing: border-box;
-    /* padding: 1% 5%; */
 }
 
 .secondParDiv {
@@ -98,4 +101,36 @@ canvas {
   to {
       transform: rotate(360deg);
   }
+}
+
+@media (max-width: 350px) {
+    #graphDiv {
+        max-width: 250px;
+        align-self: center;
+    }
+
+    #phDiv {
+        height: 80vh;
+    }
+
+    .secondParDiv {
+        background-size: inherit;
+    }
+
+    .loading {
+        width: 3rem;
+        height: 3rem;
+        align-self: center;
+    }
+    
+    tr:nth-child(odd) {
+    background: #ccc;
+    }
+
+}
+
+@media (max-width: 800px) {
+    #phDiv {
+        height: 90vh;
+    }
 }

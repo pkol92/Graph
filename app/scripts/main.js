@@ -1,4 +1,6 @@
 const root = document.getElementById("dataPage");
+const url = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
+const tableTitles = ["First Name", "Last Name", "Age", "City"];
 
 //create first paragraph section
 const paragraphDiv = document.createElement("div");
@@ -9,14 +11,6 @@ const pFirst = "France, officially French Republic, French France or République
 
 const pSecond = "The graph shows the groups of men of different age groups (20 to 79 years) of French nationality. The table shows basic information about the 10 oldest males from the available data. 1000 records from external API (https://randomuser.me/) were used.";
 
-// function addText(msg, id) {
-//     const div = document.getElementById(id);
-//     const paragraph = document.createElement("p");
-//     paragraph.textContent += msg;
-//    div.append(paragraph);
-// }; 
-
-// addText(pFirst, "paragraphDiv");
 const paragraphFirst = document.createElement("p");
 paragraphFirst.textContent += pFirst;
 const paragraphSecond = document.createElement("p");
@@ -66,19 +60,33 @@ parDiv.append(parFirst, parSecond, parThird);
 
 root.append(phDiv, button, parDiv);
 
-const myTitles = ["First Name", "Last Name", "Age", "City"];
+
+
+// function addMen(men){
+//     const tbl = document.querySelector("#table");
+//     const row = tbl.insertRow();
+//     const firstName = row.insertCell();
+//     firstName.innerText = men.name.first;
+//     const lastName = row.insertCell();
+//     lastName.innerText = men.name.last;
+//     const age = row.insertCell();
+//     age.innerText = men.dob.age;
+//     const city = row.insertCell();
+//     city.innerText = men.location.city;
+// };
+
+function addRow(row, item){
+    const nameCell = row.insertCell();
+    nameCell.innerText = item;
+}
 
 function addMen(men){
     const tbl = document.querySelector("#table");
     const row = tbl.insertRow();
-    const firstName = row.insertCell();
-    firstName.innerText = men.name.first;
-    const lastName = row.insertCell();
-    lastName.innerText = men.name.last;
-    const age = row.insertCell();
-    age.innerText = men.dob.age;
-    const city = row.insertCell();
-    city.innerText = men.location.city;
+    addRow(row, men.name.first);
+    addRow(row, men.name.last);
+    addRow(row, men.dob.age);
+    addRow(row, men.location.city);
 };
 
 function createTable(men, fieldTitles) {
@@ -109,7 +117,7 @@ function deleteGraph() {
     graph.remove();
 }
 
-//test graph
+//create graph
 function createGraph(dataMan) {
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", "chart");
@@ -135,8 +143,7 @@ function createGraph(dataMan) {
     const menChart = new Chart (canvasElemt, config);
 };
 
-const myApi = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
-
+//create loader 
 const loaderDiv = document.querySelector("#placeholder");
 
 function displayLoading() {
@@ -150,6 +157,7 @@ function hideLoading() {
     loaderDiv.className = "placeholder";
 }
 
+//download data from API
 function downloadData(apiUrl) {
     displayLoading()
     fetch(apiUrl)
@@ -167,6 +175,7 @@ function downloadData(apiUrl) {
     const age70 = [];
     const groupsMan = [];
 
+    //adding men from data to different age groups
     for (let i = 0; i<data.results.length; i++){
         if ((data.results[i].dob.age >= 20) && (data.results[i].dob.age < 30)) {
             age20.push(data.results[i].dob.age)
@@ -185,14 +194,14 @@ function downloadData(apiUrl) {
     
     groupsMan.push(age20.length, age30.length, age40.length, age50.length, age60.length, age70.length);
 
-    //data to table
+    //sort men age to the table
     const sortAge = data.results.sort((a, b) => b.dob.age - a.dob.age);
 
     // create graph
         createGraph(groupsMan);
 
     //create table
-        createTable(sortAge, myTitles);
+        createTable(sortAge, tableTitles);
               
     })
     .catch(error => {
@@ -202,7 +211,9 @@ function downloadData(apiUrl) {
 
 };
 
+//adding img to second part of text
 const imgDiv = document.getElementById("secondParDiv");
+
 function addImg() {
     imgDiv.className = "secondParDiv";
 };
@@ -213,6 +224,7 @@ function removeImg() {
 
 let countClick = 0;
 
+//add function to the button
 button.addEventListener("click", e => {
     // e.preventDefault();
     countClick++
@@ -230,7 +242,7 @@ button.addEventListener("click", e => {
         deleteTable();
     };
 
-    downloadData(myApi);
+    downloadData(url);
     
 });
 
