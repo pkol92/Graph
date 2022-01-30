@@ -933,7 +933,6 @@ function getGraphData(data) {
   var age50 = 0;
   var age60 = 0;
   var age70 = 0;
-  var groupsMan = [];
 
   for (var i = 0; i < data.results.length; i++) {
     var age = data.results[i].dob.age;
@@ -953,8 +952,7 @@ function getGraphData(data) {
     }
   }
 
-  groupsMan.push(age20, age30, age40, age50, age60, age70);
-  return groupsMan;
+  return [age20, age30, age40, age50, age60, age70];
 } //create table
 
 
@@ -1019,15 +1017,14 @@ function addImg() {
 }
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-  var count = parseInt(localStorage.getItem('counter') || 0);
-  localStorage.setItem('counter', ++count);
+  var count = parseInt(localStorage.getItem("counter") || 0);
+  localStorage.setItem("counter", ++count);
 }
 
-if (localStorage.getItem('counter') % 5 === 0) {
+if (localStorage.getItem("counter") % 5 === 0) {
   addImg();
-}
+} //download API
 
-; //download API
 
 function downloadData(_x) {
   return _downloadData.apply(this, arguments);
@@ -1151,7 +1148,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56858" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64718" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
