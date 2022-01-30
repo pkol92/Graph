@@ -2,29 +2,6 @@ const root = document.getElementById("dataPage");
 const url = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
 const tableTitles = ["First Name", "Last Name", "Age", "City"];
 
-//create div for placeholder
-const phDiv = document.getElementById("phDiv");
-
-//create placeholder
-const placeholder = document.createElement("div");
-placeholder.setAttribute("id", "placeholder");
-placeholder.setAttribute("class", "placeholder");
-
-const graphDiv = document.createElement("div");
-graphDiv.setAttribute("id", "graphDiv");
-
-const tableDiv = document.createElement("div");
-tableDiv.setAttribute("id", "tableDiv");
-
-placeholder.append(graphDiv, tableDiv);
-phDiv.append(placeholder);
-
-//create button
-const button = document.createElement("button");
-button.innerText = "Show data";
-
-phDiv.after(button);
-
 //function to create the table
 function addRow(row, item){
     const nameCell = row.insertCell();
@@ -63,11 +40,6 @@ function deleteTable() {
     table.remove();
 }
 
-function deleteGraph() {
-    const graph = document.getElementById("chart");
-    graph.remove();
-}
-
 //create graph
 function createGraph(dataMan) {
     const canvas = document.createElement("canvas");
@@ -93,6 +65,11 @@ function createGraph(dataMan) {
 
     const menChart = new Chart (canvasElemt, config);
 };
+
+function deleteGraph() {
+    const graph = document.getElementById("chart");
+    graph.remove();
+}
 
 //create loader 
 const loaderDiv = document.querySelector("#placeholder");
@@ -163,7 +140,7 @@ function downloadData(apiUrl) {
 const imgDiv = document.getElementById("secondParDiv");
 
 function addImg() {
-    imgDiv.className = "secondParDiv";
+    imgDiv.className = "addImg";
 };
 
 function removeImg() {
@@ -173,14 +150,11 @@ function removeImg() {
 let countClick = 0;
 
 //add function to the button
+const button = document.querySelector("#btn");
 button.addEventListener("click", e => {
 
     countClick++
-    if (countClick % 5 === 0) {
-        addImg()
-    } else {
-        removeImg()
-    };
+    countClick % 5 === 0 ? addImg() : removeImg();
 
     if (document.getElementById("chart")) {
         deleteGraph()
