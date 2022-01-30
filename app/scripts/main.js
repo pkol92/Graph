@@ -9,7 +9,7 @@ root.append(paragraphDiv);
 
 const pFirst = "France, officially French Republic, French France or République Française, country of northwestern Europe. Historically and culturally among the most important nations in the Western world, France has also played a highly significant role in international affairs, with former colonies in every corner of the globe. Bounded by the Atlantic Ocean and the Mediterranean Sea, the Alps and the Pyrenees, France has long provided a geographic, economic, and linguistic bridge joining northern and southern Europe. It is Europe’s most important agricultural producer and one of the world’s leading industrial powers.";
 
-const pSecond = "The graph shows the groups of men of different age groups (20 to 79 years) of French nationality. The table shows basic information about the 10 oldest males from the available data. 1000 records from external API (https://randomuser.me/) were used.";
+const pSecond = "The graph shows the groups of men of different age (20 to 79 years) of French nationality. The table shows basic information about the 10 oldest males from the available data. 1000 records from external API were used.";
 
 const paragraphFirst = document.createElement("p");
 paragraphFirst.textContent += pFirst;
