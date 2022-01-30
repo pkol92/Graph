@@ -2,46 +2,8 @@ const root = document.getElementById("dataPage");
 const url = "https://randomuser.me/api/?gender=male&nat=fr&results=1000"
 const tableTitles = ["First Name", "Last Name", "Age", "City"];
 
-//function to create the table
-function addCell(row, text){
-    const cell = row.insertCell();
-    cell.innerText = text;
-}
-
-function addRow(person){
-    const tbl = document.querySelector("#table");
-    const row = tbl.insertRow();
-    addCell(row, person.name.first);
-    addCell(row, person.name.last);
-    addCell(row, person.dob.age);
-    addCell(row, person.location.city);
-};
-
-function createTable(data, titles) {
-    const table = document.createElement("table");
-    table.setAttribute("id", "table");
-    const tableDiv = document.getElementById('tableDiv')
-
-    titles.forEach((fieldTitle) => {
-        let th = document.createElement('th');
-        th.appendChild(document.createTextNode(fieldTitle));
-        table.append(th);
-    });
-
-    tableDiv.append(table);
-
-    for (let i = 0; i < 10; i++) {
-        addRow(data[i])
-    };        
-}
-
-function deleteTable() {
-    const table = document.getElementById('table');
-    table.remove();
-}
-
 //create graph
-function createGraph(data) {
+function drawGraph(data) {
     const canvas = document.createElement("canvas");
     canvas.setAttribute("id", "chart");
     const graphDiv = document.getElementById("graphDiv");
@@ -69,30 +31,9 @@ function createGraph(data) {
 function deleteGraph() {
     const graph = document.getElementById("chart");
     graph.remove();
-}
-
-//create loader 
-const loaderDiv = document.querySelector("#placeholder");
-
-function displayLoading() {
-    loaderDiv.className = "loading";
 };
 
-function hideLoading() {
-    loaderDiv.className = "placeholder";
-}
-
-//download data from API
-function downloadData(apiUrl) {
-    displayLoading()
-    fetch(apiUrl)
-    .then((results) => {
-      return results.json();
-    })
-    .then((data) => {
-    hideLoading()
-
-    //adding men from data to different age groups
+function getGraphData(data){
     let age20 = 0;
     let age30 = 0;
     let age40 = 0;
@@ -120,22 +61,62 @@ function downloadData(apiUrl) {
 
     groupsMan.push(age20, age30, age40, age50, age60, age70);
 
-    //sort men age to the table
-    const sortAge = data.results.sort((a, b) => b.dob.age - a.dob.age);
-
-    // create graph
-        createGraph(groupsMan);
-
-    //create table
-        createTable(sortAge, tableTitles);
-              
-    })
-    .catch(error => {
-         console.log('Error happened here!')
-         console.error(error)
-    })
-
+    return groupsMan
 };
+
+//create table
+function addCell(row, text){
+    const cell = row.insertCell();
+    cell.innerText = text;
+};
+
+function addRow(data){
+    const tbl = document.querySelector("#table");
+    const row = tbl.insertRow();
+    addCell(row, data.name.first);
+    addCell(row, data.name.last);
+    addCell(row, data.dob.age);
+    addCell(row, data.location.city);
+};
+
+function drawTable(data, titles) {
+    const table = document.createElement("table");
+    table.setAttribute("id", "table");
+    const tableDiv = document.getElementById('tableDiv')
+
+    titles.forEach((title) => {
+        let th = document.createElement('th');
+        th.appendChild(document.createTextNode(title));
+        table.append(th);
+    });
+
+    tableDiv.append(table);
+
+    for (let i = 0; i < 10; i++) {
+        addRow(data[i])
+    };        
+};
+
+function deleteTable() {
+    const table = document.getElementById('table');
+    table.remove();
+};
+
+function getTableData(data) {
+    const sortAge = data.results.sort((a, b) => b.dob.age - a.dob.age).slice(0, 10);
+    return sortAge
+};
+
+//create loader 
+const loaderDiv = document.querySelector("#placeholder");
+
+function displayLoading() {
+    loaderDiv.className = "loading";
+};
+
+function hideLoading() {
+    loaderDiv.className = "placeholder";
+}
 
 //adding img to second part of text
 const imgDiv = document.getElementById("secondParDiv");
@@ -146,9 +127,26 @@ function addImg() {
 
 function removeImg() {
     imgDiv.className = "paragraphDiv";
-}
+};
 
 let countClick = 0;
+
+//download API
+async function downloadData(apiUrl) {
+    displayLoading();
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    hideLoading();
+    return data
+}
+
+async function main() {
+	const data = await downloadData(url)
+	const dataGraph = getGraphData(data);
+    drawGraph(dataGraph);
+    const dataTable = getTableData(data);
+    drawTable(dataTable, tableTitles)
+}
 
 //add function to the button
 const button = document.querySelector("#btn");
@@ -166,5 +164,7 @@ button.addEventListener("click", e => {
     };
 
     downloadData(url);
-    
+    (async() => {
+    await main()
+    })();
 });
