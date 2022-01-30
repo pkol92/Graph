@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+
 const url = "https://randomuser.me/api/?gender=male&nat=fr&results=1000";
 const tableTitles = ["First Name", "Last Name", "Age", "City"];
 
