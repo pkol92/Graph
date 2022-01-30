@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint ./",
     "dev": "parcel app/index.html",
-    "build": "parcel build app/index.html"
+    "build": "parcel build app/index.html",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/pkol92/Graph/issues"
   },
-  "homepage": "https://github.com/pkol92/Graph",
+  "homepage": "https://pkol92.github.io/Graph/",
   "dependencies": {
     "chart.js": "^3.7.0",
     "gh-pages": "^3.2.3"
